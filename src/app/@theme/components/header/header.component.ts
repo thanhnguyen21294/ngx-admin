@@ -3,8 +3,12 @@ import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeServ
 
 import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
-import { map, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { filter, map, takeUntil } from 'rxjs/operators';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { SYSTEM_CONSTANT } from '../../../@core/constants/system.constant';
+import { AuthService } from '../../../@core/service/auth.service';
+import { MenuService } from '../../../@core/service/menu.service';
+import { User } from '../../../@core/models/user';
 
 @Component({
   selector: 'ngx-header',
@@ -38,14 +42,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [{ title: 'Profile', icon: 'person-outline', data: { id: 'profile' } }, { title: 'Log out', icon: 'log-out-outline', data: { id: 'logout' } }];
 
   constructor(private sidebarService: NbSidebarService,
-              private menuService: NbMenuService,
-              private themeService: NbThemeService,
-              private userService: UserData,
-              private layoutService: LayoutService,
-              private breakpointService: NbMediaBreakpointsService) {
+    private nbMenuService: NbMenuService,
+    private themeService: NbThemeService,
+    private userService: UserData,
+    private layoutService: LayoutService,
+    private breakpointService: NbMediaBreakpointsService,
+    private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -53,7 +58,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((users: any) => this.user = users.nick);
+      .subscribe((users: any) => this.user = users);
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
@@ -69,6 +74,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
+
+    this.nbMenuService.onItemClick().pipe(
+      filter(({ tag }) => tag === 'my-context-menu'),
+      map(({ item: { data } }) => data.id))
+      .subscribe((event) => {
+        if(event === "profile") {
+          this.profile()
+        } else if(event === "logout") {
+          this.logout()
+        }
+      });
   }
 
   ngOnDestroy() {
@@ -88,7 +104,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   navigateHome() {
-    this.menuService.navigateHome();
+    this.nbMenuService.navigateHome();
     return false;
+  }
+
+  profile() {
+    console.log("open profile");
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

@@ -223,25 +223,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: 'Auth',
-    icon: 'lock-outline',
+    title: 'LTS GROUP',
+    group: true,
+  },
+  {
+    title: 'Custom Component',
+    icon: 'person-outline',
     children: [
       {
-        title: 'Login',
-        link: '/auth/login',
-      },
-      {
-        title: 'Register',
-        link: '/auth/register',
-      },
-      {
-        title: 'Request Password',
-        link: '/auth/request-password',
-      },
-      {
-        title: 'Reset Password',
-        link: '/auth/reset-password',
-      },
-    ],
-  },
+        title: 'Custom 1',
+        link: '/pages/custom1'
+      }
+    ]
+  }
 ];

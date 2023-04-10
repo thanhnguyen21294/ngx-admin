@@ -8,6 +8,8 @@ import { BubbleMapComponent } from './bubble/bubble-map.component';
 import { SearchMapComponent } from './search-map/search-map.component';
 import { MapComponent } from './search-map/map/map.component';
 import { SearchComponent } from './search-map/search/search.component';
+import { AuthGuard } from '../../@core/auth/auth.guard';
+import { ChildAuthGuard } from '../../@core/auth/child-auth.guard';
 
 const routes: Routes = [{
   path: '',
@@ -15,16 +17,21 @@ const routes: Routes = [{
   children: [{
     path: 'gmaps',
     component: GmapsComponent,
+    canActivateChild: [ChildAuthGuard]
   }, {
     path: 'leaflet',
     component: LeafletComponent,
+    canActivateChild: [ChildAuthGuard]
   }, {
     path: 'bubble',
     component: BubbleMapComponent,
+    canActivateChild: [ChildAuthGuard]
   }, {
     path: 'searchmap',
     component: SearchMapComponent,
+    canActivateChild: [ChildAuthGuard]
   }],
+  canActivate: [AuthGuard]
 }];
 
 @NgModule({

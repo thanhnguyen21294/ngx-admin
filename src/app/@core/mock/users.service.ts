@@ -1,6 +1,7 @@
 import { of as observableOf,  Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Contacts, RecentUsers, UserData } from '../data/users';
+import { SYSTEM_CONSTANT } from '../constants/system.constant';
 
 @Injectable()
 export class UserService extends UserData {
@@ -39,8 +40,15 @@ export class UserService extends UserData {
     { user: this.users.jack, type: this.types.mobile, time: this.time.setHours(8, 0)},
   ];
 
+  public userData: any;
   getUsers(): Observable<any> {
-    return observableOf(this.users);
+    let currentUser = localStorage.getItem(SYSTEM_CONSTANT.USER_CURRENT);
+    if(currentUser) {
+      this.userData = JSON.parse(currentUser);
+      console.log("user data from service, ", this.userData);
+      return observableOf(this.userData);
+    }
+    return;
   }
 
   getContacts(): Observable<Contacts[]> {

@@ -1,0 +1,29 @@
+<nb-layout id="login">
+  <nb-layout-column>
+    <nb-card class="card-login">
+      <nb-card-header class="text-center">
+        <h2>Login</h2>
+      </nb-card-header>
+      <nb-card-body>
+        <form>
+          <div class="form-group">
+            <label class="label" for="username">User</label>
+            <input type="text" id="username" name="username" nbInput fullWidth placeholder="User name" class="form-control" [(ngModel)]="userName">
+          </div>
+          <div class="form-group">
+            <label class="label" for="password">Password</label>
+            <input type="password" id="password" name="password" nbInput fullWidth placeholder="Password" class="form-control" [(ngModel)]="passWord">
+          </div>
+          <div class="form-group mt-2">
+            <div class="row d-flex justify-content-center">
+              <button nbButton (click)="login()" status="primary">Sign in</button>
+            </div>
+          </div>
+          <div class="form-group mt-2 d-flex justify-content-center">
+            <p>Don't have an account? <a (click)="register()">Register</a></p>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </nb-layout-column>
+</nb-layout>

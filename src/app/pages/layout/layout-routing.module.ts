@@ -7,6 +7,8 @@ import { AccordionComponent } from './accordion/accordion.component';
 import { InfiniteListComponent } from './infinite-list/infinite-list.component';
 import { ListComponent } from './list/list.component';
 import { StepperComponent } from './stepper/stepper.component';
+import { AuthGuard } from '../../@core/auth/auth.guard';
+import { ChildAuthGuard } from '../../@core/auth/child-auth.guard';
 
 const routes: Routes = [{
   path: '',
@@ -15,18 +17,22 @@ const routes: Routes = [{
     {
       path: 'stepper',
       component: StepperComponent,
+      canActivateChild: [ChildAuthGuard]
     },
     {
       path: 'list',
       component: ListComponent,
+      canActivateChild: [ChildAuthGuard]
     },
     {
       path: 'infinite-list',
       component: InfiniteListComponent,
+      canActivateChild: [ChildAuthGuard]
     },
     {
       path: 'accordion',
       component: AccordionComponent,
+      canActivateChild: [ChildAuthGuard]
     },
     {
       path: 'tabs',
@@ -40,14 +46,18 @@ const routes: Routes = [{
         {
           path: 'tab1',
           component: Tab1Component,
+          canActivateChild: [ChildAuthGuard]
         },
         {
           path: 'tab2',
           component: Tab2Component,
+          canActivateChild: [ChildAuthGuard]
         },
       ],
+      canActivateChild: [ChildAuthGuard]
     },
   ],
+  canActivate: [AuthGuard]
 }];
 
 @NgModule({

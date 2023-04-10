@@ -6,6 +6,8 @@ import { FormInputsComponent } from './form-inputs/form-inputs.component';
 import { FormLayoutsComponent } from './form-layouts/form-layouts.component';
 import { DatepickerComponent } from './datepicker/datepicker.component';
 import { ButtonsComponent } from './buttons/buttons.component';
+import { AuthGuard } from '../../@core/auth/auth.guard';
+import { ChildAuthGuard } from '../../@core/auth/child-auth.guard';
 
 const routes: Routes = [
   {
@@ -15,24 +17,30 @@ const routes: Routes = [
       {
         path: 'inputs',
         component: FormInputsComponent,
+        canActivateChild: [ChildAuthGuard]
       },
       {
         path: 'layouts',
         component: FormLayoutsComponent,
+        canActivateChild: [ChildAuthGuard]
       },
       {
         path: 'layouts',
         component: FormLayoutsComponent,
+        canActivateChild: [ChildAuthGuard]
       },
       {
         path: 'buttons',
         component: ButtonsComponent,
+        canActivateChild: [ChildAuthGuard]
       },
       {
         path: 'datepicker',
         component: DatepickerComponent,
+        canActivateChild: [ChildAuthGuard]
       },
     ],
+    canActivate: [AuthGuard]
   },
 ];
 

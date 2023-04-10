@@ -5,6 +5,8 @@ import { ChartsComponent } from './charts.component';
 import { EchartsComponent } from './echarts/echarts.component';
 import { D3Component } from './d3/d3.component';
 import { ChartjsComponent } from './chartjs/chartjs.component';
+import { AuthGuard } from '../../@core/auth/auth.guard';
+import { ChildAuthGuard } from '../../@core/auth/child-auth.guard';
 
 const routes: Routes = [{
   path: '',
@@ -12,13 +14,17 @@ const routes: Routes = [{
   children: [{
     path: 'echarts',
     component: EchartsComponent,
+    canActivateChild: [ChildAuthGuard]
   }, {
     path: 'd3',
     component: D3Component,
+    canActivateChild: [ChildAuthGuard]
   }, {
     path: 'chartjs',
     component: ChartjsComponent,
+    canActivateChild: [ChildAuthGuard]
   }],
+  canActivate: [AuthGuard]
 }];
 
 @NgModule({

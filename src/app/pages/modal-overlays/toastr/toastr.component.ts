@@ -14,7 +14,7 @@ import {
   templateUrl: './toastr.component.html',
 })
 export class ToastrComponent {
-  constructor(private toastrService: NbToastrService) {}
+  constructor(private toastrService: NbToastrService) { }
 
   config: NbToastrConfig;
 
@@ -53,11 +53,15 @@ export class ToastrComponent {
     { title: null, body: 'Toastr rock!' },
   ];
 
-  makeToast() {
-    this.showToast(this.status, this.title, this.content);
+  makeToast(status?: NbComponentStatus, title?: string, content?: string) {
+    if (title == "" || content == "") {
+      this.showToast(this.status, this.title, this.content);
+    } else {
+      this.showToast(status, title, content);
+    }
   }
 
-  openRandomToast () {
+  openRandomToast() {
     const typeIndex = Math.floor(Math.random() * this.types.length);
     const quoteIndex = Math.floor(Math.random() * this.quotes.length);
     const type = this.types[typeIndex];
