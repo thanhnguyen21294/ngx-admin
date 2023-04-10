@@ -10,6 +10,7 @@ export class Custom1Component implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log("custom component")
   }
 
 }
