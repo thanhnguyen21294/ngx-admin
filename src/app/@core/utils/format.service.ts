@@ -16,11 +16,11 @@ interface DestinationObject {
   [key: string]: any;
 }
 
-export function mapObjectData(source: SourceObject, destination: DestinationObject) {
+export function mapObjectData<T>(source: SourceObject, destination: DestinationObject) {
   for (const key in destination) {
     if (destination.hasOwnProperty(key) && source.hasOwnProperty(key)) {
       destination[key] = source[key];
     }
   }
-  return destination;
+  return destination as T;
 }

@@ -7,7 +7,7 @@ import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { AuthGuard } from '../@core/auth/auth.guard';
 import { ChildAuthGuard } from '../@core/auth/child-auth.guard';
-import { Custom1Component } from './custom1/custom1.component';
+import { ProductsComponent } from './products/products.component';
 
 const routes: Routes = [{
   path: '',
@@ -17,12 +17,17 @@ const routes: Routes = [{
     {
       path: 'dashboard',
       component: ECommerceComponent,
-      canActivateChild: [ChildAuthGuard]
+      canActivate: [AuthGuard]
     },
     {
       path: 'iot-dashboard',
       component: DashboardComponent,
-      canActivateChild: [ChildAuthGuard]
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'products',
+      component: ProductsComponent,
+      canActivate: [AuthGuard]
     },
     {
       path: 'layout',
@@ -92,11 +97,6 @@ const routes: Routes = [{
     {
       path: '**',
       component: NotFoundComponent,
-    },
-    {
-      path: 'custom',
-      loadChildren: () => import("../pages/custom1/custom1.module").then(m => m.Custom1Module),
-      canActivateChild: [ChildAuthGuard]
     }
   ]
 }];

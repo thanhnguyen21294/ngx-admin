@@ -1,9 +1,10 @@
 import { Router } from "@angular/router";
-import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, throwError } from "rxjs";
+import { BehaviorSubject, Observable, Subject, throwError } from "rxjs";
 import { SYSTEM_CONSTANT } from "../constants/system.constant";
-import { catchError } from "rxjs/operators";
+import { Auth, User } from "../models/user";
+import { catchError, map } from "rxjs/operators";
 
 const headers = new HttpHeaders({ "content-type": "application/json" });
 
@@ -11,34 +12,28 @@ const headers = new HttpHeaders({ "content-type": "application/json" });
   providedIn: "root"
 })
 export class AuthService {
+  private authSubject = new Subject<Auth>();
   public redirectUrl: string;
 
-  constructor(private httpClient: HttpClient, private router: Router) { }
+  constructor(private httpClient: HttpClient, private router: Router) {}
 
-  public login(username: string, password: string, rememberme = true): Observable<any> {
-    const model = {
+  public setUser(authUser: Auth) {
+    localStorage.setItem(SYSTEM_CONSTANT.USER_CURRENT, JSON.stringify(authUser));
+    this.authSubject.next(authUser);
+  }
+
+  public login(username: string, password: string): Observable<Auth> {
+    const body = {
       username: username,
       password: password,
     }
     let url = SYSTEM_CONSTANT.API_URL + `/login`;
-    return this.httpClient.post(url, model, { headers: headers }).pipe(
-      catchError((error: HttpErrorResponse) => {
-        if(error.status === 401) {
-          return throwError('Unauthorized');
-        }
-        return throwError(error.error.message)
-      })
-    )
+    return this.httpClient.post<Auth>(url, body, { headers: headers });
   }
 
   public logout() {
     localStorage.removeItem(SYSTEM_CONSTANT.USER_CURRENT);
+    // this.authSubject.next(null);
     this.router.navigate(['/login']);
-  }
-
-  public checkLoggedInUser(): boolean {
-    return localStorage.getItem(SYSTEM_CONSTANT.USER_CURRENT)
-      ? true
-      : false;
   }
 }

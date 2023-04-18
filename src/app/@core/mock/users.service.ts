@@ -45,7 +45,6 @@ export class UserService extends UserData {
     let currentUser = localStorage.getItem(SYSTEM_CONSTANT.USER_CURRENT);
     if(currentUser) {
       this.userData = JSON.parse(currentUser);
-      console.log("user data from service, ", this.userData);
       return observableOf(this.userData);
     }
     return;

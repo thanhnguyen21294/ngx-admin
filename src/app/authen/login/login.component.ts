@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { SYSTEM_CONSTANT } from '../../@core/constants/system.constant';
 import { AuthService } from '../../@core/service/auth.service';
 import { ToastrComponent } from '../../pages/modal-overlays/toastr/toastr.component';
+import { User } from '../../@core/models/user';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'ngx-login',
@@ -22,23 +23,24 @@ export class LoginComponent implements OnInit {
 
   public userName: string = '';
   public passWord: string = '';
-  rememberMe = true;
+  currentUser: User;
 
   ngOnInit(): void {
-    document.getElementById("errorLogin").className = "hidden error";
+    console.log("log in")
   }
 
   login() {
-    this.authService.login(this.userName, this.passWord, this.rememberMe).pipe(
-      catchError((error) => {
-        this.toastr.makeToast('warning', 'Login', error);
+    this.authService.login(this.userName, this.passWord).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.toastr.makeToast('warning', 'Login', 'Unauthorized');
+        }
+        this.toastr.makeToast('warning', 'Login', error.error.message);
         return throwError(error)
       })
-    ).subscribe((response) => {
-      if (response.id) {
-        localStorage.setItem(SYSTEM_CONSTANT.USER_CURRENT, JSON.stringify(response));
-        this.router.navigate(['pages']);
-      }
+    ).subscribe(response => {
+      this.authService.setUser(response);
+      this.router.navigate(['pages'])
     })
   }
 

@@ -28,6 +28,12 @@ export class DataService {
     });
   }
 
+  deleteById(uri: string, id: string): Observable<any> {
+    return this._http.delete(this.baseUrl + uri + `/${id}`, {
+      headers: headers
+    })
+  }
+
   delete(uri: string, key: string, value: string): Observable<any> {
     return this._http.delete(this.baseUrl + uri + "?" + key + "=" + value, {
       headers: headers,

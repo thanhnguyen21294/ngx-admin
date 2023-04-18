@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
 
   userName = '';
   passWord = '';
-  public userData: User = {
+  public userData: Partial<User> = {
     avatar: "",
     birthday: "",
     email: "",
@@ -71,7 +71,7 @@ export class RegisterComponent implements OnInit {
   onSubmit() {
     if (this.registerForm.status === "VALID") {
       this.registerForm.value.birthday = formatDate(this.registerForm.value.birthday);
-      const data = mapObjectData(this.registerForm.value, this.userData);
+      const data = mapObjectData<User>(this.registerForm.value, this.userData);
       this.dataService.post("/users", data).subscribe(response => {
         if (response) {
           this.toastr.makeToast('success', "Create user", "Create user success")

@@ -8,7 +8,7 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { SYSTEM_CONSTANT } from '../../../@core/constants/system.constant';
 import { AuthService } from '../../../@core/service/auth.service';
 import { MenuService } from '../../../@core/service/menu.service';
-import { User } from '../../../@core/models/user';
+import { Auth, User } from '../../../@core/models/user';
 
 @Component({
   selector: 'ngx-header',
@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
-  user: any;
+  user: User;
 
   themes = [
     {

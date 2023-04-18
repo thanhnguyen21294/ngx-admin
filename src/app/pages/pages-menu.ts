@@ -13,6 +13,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/iot-dashboard',
   },
   {
+    title: 'Products',
+    icon: 'home-outline',
+    link: '/pages/products',
+  },
+  {
     title: 'FEATURES',
     group: true,
   },
@@ -221,19 +226,5 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/miscellaneous/404',
       },
     ],
-  },
-  {
-    title: 'LTS GROUP',
-    group: true,
-  },
-  {
-    title: 'Custom Component',
-    icon: 'person-outline',
-    children: [
-      {
-        title: 'Custom 1',
-        link: '/pages/custom1'
-      }
-    ]
   }
 ];
