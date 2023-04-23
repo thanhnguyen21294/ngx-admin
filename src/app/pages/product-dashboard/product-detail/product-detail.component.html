@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="col-lg-6">
+    <nb-card>
+      <ngx-charts-pie-chart
+        [scheme]="colorScheme"
+        [results]="results"
+        [legend]="showLegend"
+        [labels]="showLabels"
+        [animations]="showAnimations"
+        [legendTitle]="legendTitle"
+      >
+      </ngx-charts-pie-chart>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <ngx-charts-advanced-pie-chart
+        [scheme]="colorScheme"
+        [results]="results"
+        [label]="'Total Products'"
+      >
+      </ngx-charts-advanced-pie-chart>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <ngx-charts-bar-vertical
+        [scheme]="colorScheme"
+        [results]="results"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [legendTitle]="'Product'"
+      >
+      </ngx-charts-bar-vertical>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <ngx-charts-line-chart
+        [scheme]="colorScheme"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [timeline]="timeline"
+        [results]="lineChartData"
+        [legendTitle]="'Product'"
+        (select)="onSelect($event)"
+        (activate)="onActivate($event)"
+        (deactivate)="onDeactivate($event)"
+      >
+      </ngx-charts-line-chart>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <ngx-charts-bar-vertical-normalized
+        [scheme]="colorScheme"
+        [results]="lineChartData"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="'Product'"
+        [yAxisLabel]="'Sale % rate'"
+        [legendTitle]="'Year'"
+        (select)="onSelect($event)"
+      >
+      </ngx-charts-bar-vertical-normalized>
+    </nb-card>
+  </div>
+</div>

@@ -14,19 +14,24 @@ const routes: Routes = [{
   component: PagesComponent,
   canActivate: [AuthGuard],
   children: [
-    {
-      path: 'dashboard',
-      component: ECommerceComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'iot-dashboard',
-      component: DashboardComponent,
-      canActivate: [AuthGuard]
-    },
+    // {
+    //   path: 'dashboard',
+    //   component: ECommerceComponent,
+    //   canActivate: [AuthGuard]
+    // },
+    // {
+    //   path: 'iot-dashboard',
+    //   component: DashboardComponent,
+    //   canActivate: [AuthGuard]
+    // },
     {
       path: 'products',
-      component: ProductsComponent,
+      loadChildren: () => import("./products/products.module").then(m => m.ProductsModule),
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'products-dashboard',
+      loadChildren: () => import("./product-dashboard/product-dashboard.module").then(m => m.ProductDashboardModule),
       canActivate: [AuthGuard]
     },
     {
@@ -91,7 +96,7 @@ const routes: Routes = [{
     },
     {
       path: '',
-      redirectTo: 'dashboard',
+      redirectTo: 'products-dashboard',
       pathMatch: 'full',
     },
     {

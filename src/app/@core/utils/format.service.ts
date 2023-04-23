@@ -24,3 +24,16 @@ export function mapObjectData<T>(source: SourceObject, destination: DestinationO
   }
   return destination as T;
 }
+
+export function generateRandomColor(count: number): string[] {
+  let arrColor = []
+
+  for (let i = 0; i < count; i++) {
+    let hexChars = '0123456789ABCDEF';
+    let color: string = '#';
+    color += hexChars[Math.floor(Math.random() * 16)];
+    arrColor.push(color);
+  }
+
+  return arrColor;
+}

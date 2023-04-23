@@ -12,13 +12,12 @@ import { ToastrComponent } from '../modal-overlays/toastr/toastr.component';
   providers: [ToastrComponent]
 })
 export class ProductsComponent implements OnInit {
-  private destroy$: Subject<void> = new Subject<void>();
   public products: Products[];
 
   constructor(private dataService: DataService, private toastr: ToastrComponent) { }
 
   ngOnInit(): void {
-    this.dataService.get("/products").pipe(takeUntil(this.destroy$)).subscribe((res: Products[]) => {
+    this.dataService.get("/products").subscribe((res: Products[]) => {
       this.products = res;
     });
   }

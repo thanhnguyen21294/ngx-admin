@@ -8,15 +8,17 @@ import { ECommerceModule } from './e-commerce/e-commerce.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { ProductsModule } from './products/products.module';
+import { ProductDashboardModule } from './product-dashboard/product-dashboard.module';
 @NgModule({
   imports: [
     PagesRoutingModule,
     ThemeModule,
     NbMenuModule,
-    DashboardModule,
-    ECommerceModule,
+    // DashboardModule,
+    // ECommerceModule,
     MiscellaneousModule,
-    ProductsModule
+    ProductsModule,
+    ProductDashboardModule
   ],
   declarations: [
     PagesComponent,
