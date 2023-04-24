@@ -100,7 +100,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
           }),
         ];
         this.lineChartData = this.mapDataForLineChart(res);
-        console.log(this.lineChartData);
       }
     });
   }

@@ -24,11 +24,11 @@ const routes: Routes = [{
     //   component: DashboardComponent,
     //   canActivate: [AuthGuard]
     // },
-    {
-      path: 'products',
-      loadChildren: () => import("./products/products.module").then(m => m.ProductsModule),
-      canActivate: [AuthGuard]
-    },
+    // {
+    //   path: 'products',
+    //   loadChildren: () => import("./products/products.module").then(m => m.ProductsModule),
+    //   canActivate: [AuthGuard]
+    // },
     {
       path: 'products-dashboard',
       loadChildren: () => import("./product-dashboard/product-dashboard.module").then(m => m.ProductDashboardModule),

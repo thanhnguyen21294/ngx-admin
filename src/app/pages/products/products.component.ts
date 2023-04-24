@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../@core/service/data.service';
 import { Products } from '../../@core/models/products';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { ToastrComponent } from '../modal-overlays/toastr/toastr.component';
 
 @Component({
