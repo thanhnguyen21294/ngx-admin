@@ -1,0 +1,42 @@
+<nb-card>
+  <nb-card-header>{{getTitle(title)}}</nb-card-header>
+  <nb-card-body>
+    <nb-card-body>
+      <div *ngIf="getTitle(title) === 'Update User'">
+        <div class="form-group">
+          <label for="firstname" class="label">First Name</label>
+          <input type="text" nbInput fullWidth id="firstname" placeholder="First Name"
+            [(ngModel)]="data.data.firstName">
+        </div>
+        <div class="form-group">
+          <label for="lastname" class="label">Last Name</label>
+          <input type="text" nbInput fullWidth id="lastname" placeholder="Last Name" [(ngModel)]="data.data.lastName">
+        </div>
+      </div>
+
+      <div *ngIf="getTitle(title) === 'Create User'">
+        <div>You must <span><a href="#" (click)="logout()">logout</a></span> to create new user</div>
+      </div>
+
+      <div *ngIf="getTitle(title) === 'Delete User'">
+        <div class="form-group">
+          <label for="firstname" class="label">First Name</label>
+          <input type="text" nbInput fullWidth id="firstname" placeholder="First Name" [(ngModel)]="data.data.firstName"
+            disabled>
+        </div>
+        <div class="form-group">
+          <label for="lastname" class="label">Last Name</label>
+          <input type="text" nbInput fullWidth id="lastname" placeholder="Last Name" [(ngModel)]="data.data.lastName"
+            disabled>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card-body>
+  <nb-card-footer *ngIf="getTitle(title) === 'Update User' || getTitle(title) === 'Delete User'">
+    <button class="cancel" nbButton status="danger" (click)="cancel()">Cancel</button>
+    <button nbButton status="success" (click)="submit()">Submit</button>
+  </nb-card-footer>
+  <nb-card-footer *ngIf="getTitle(title) === 'Create User'">
+    <button class="cancel" nbButton status="secondary" (click)="cancel()">Close</button>
+  </nb-card-footer>
+</nb-card>

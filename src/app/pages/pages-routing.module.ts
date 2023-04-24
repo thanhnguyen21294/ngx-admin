@@ -24,75 +24,80 @@ const routes: Routes = [{
     //   component: DashboardComponent,
     //   canActivate: [AuthGuard]
     // },
-    // {
-    //   path: 'products',
-    //   loadChildren: () => import("./products/products.module").then(m => m.ProductsModule),
-    //   canActivate: [AuthGuard]
-    // },
     {
       path: 'products-dashboard',
       loadChildren: () => import("./product-dashboard/product-dashboard.module").then(m => m.ProductDashboardModule),
       canActivate: [AuthGuard]
     },
     {
+      path: 'products',
+      loadChildren: () => import("./products/products.module").then(m => m.ProductsModule),
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'manage-user',
+      loadChildren: () => import("./manage-user/manage-user.module").then(m => m.ManageUserModule),
+      canActivate: [AuthGuard]
+    },
+    {
       path: 'layout',
       loadChildren: () => import('./layout/layout.module')
         .then(m => m.LayoutModule),
-        canActivateChild: [ChildAuthGuard]
+      canActivateChild: [ChildAuthGuard]
     },
     {
       path: 'forms',
       loadChildren: () => import('./forms/forms.module')
         .then(m => m.FormsModule),
-        canActivateChild: [ChildAuthGuard]
+      canActivateChild: [ChildAuthGuard]
     },
     {
       path: 'ui-features',
       loadChildren: () => import('./ui-features/ui-features.module')
         .then(m => m.UiFeaturesModule),
-        canActivateChild: [ChildAuthGuard]
+      canActivateChild: [ChildAuthGuard]
     },
     {
       path: 'modal-overlays',
       loadChildren: () => import('./modal-overlays/modal-overlays.module')
         .then(m => m.ModalOverlaysModule),
-        canActivateChild: [ChildAuthGuard]
+      canActivateChild: [ChildAuthGuard]
     },
     {
       path: 'extra-components',
       loadChildren: () => import('./extra-components/extra-components.module')
         .then(m => m.ExtraComponentsModule),
-        canActivateChild: [ChildAuthGuard]
+      canActivateChild: [ChildAuthGuard]
     },
     {
       path: 'maps',
       loadChildren: () => import('./maps/maps.module')
         .then(m => m.MapsModule),
-        canActivateChild: [ChildAuthGuard]
+      canActivateChild: [ChildAuthGuard]
     },
     {
       path: 'charts',
       loadChildren: () => import('./charts/charts.module')
         .then(m => m.ChartsModule),
-        canActivateChild: [ChildAuthGuard]
+      canActivateChild: [ChildAuthGuard]
     },
     {
       path: 'editors',
       loadChildren: () => import('./editors/editors.module')
         .then(m => m.EditorsModule),
-        canActivateChild: [ChildAuthGuard]
+      canActivateChild: [ChildAuthGuard]
     },
     {
       path: 'tables',
       loadChildren: () => import('./tables/tables.module')
         .then(m => m.TablesModule),
-        canActivateChild: [ChildAuthGuard]
+      canActivateChild: [ChildAuthGuard]
     },
     {
       path: 'miscellaneous',
       loadChildren: () => import('./miscellaneous/miscellaneous.module')
         .then(m => m.MiscellaneousModule),
-        canActivateChild: [ChildAuthGuard]
+      canActivateChild: [ChildAuthGuard]
     },
     {
       path: '',

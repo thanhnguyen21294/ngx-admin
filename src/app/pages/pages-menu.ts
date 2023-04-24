@@ -18,11 +18,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/products-dashboard',
     home: true,
   },
-  // {
-  //   title: 'Products',
-  //   icon: 'shopping-cart-outline',
-  //   link: '/pages/products',
-  // },
+  {
+    title: 'Products',
+    icon: 'shopping-cart-outline',
+    link: '/pages/products',
+  },
+  {
+    title: 'Manage User',
+    icon: 'person-outline',
+    link: '/pages/manage-user',
+  },
   {
     title: 'FEATURES',
     group: true,

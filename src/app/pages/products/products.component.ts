@@ -15,13 +15,19 @@ export class ProductsComponent implements OnInit {
   constructor(private dataService: DataService, private toastr: ToastrComponent) { }
 
   ngOnInit(): void {
+    this.loadData();
+  }
+
+  loadData() {
     this.dataService.get("/products").subscribe((res: Products[]) => {
       this.products = res;
     });
   }
 
   settings = {
-    // mode: 'external',
+    actions: {
+      position: 'right'
+    },
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
@@ -46,7 +52,7 @@ export class ProductsComponent implements OnInit {
     },
     pager: {
       display: true,
-      perPage: 5,
+      perPage: 10,
     },
     columns: {
       id: {

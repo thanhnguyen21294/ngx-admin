@@ -22,6 +22,7 @@ import {
 } from '@nebular/theme';
 import { TokenInterceptor } from './@core/interceptor/token.interceptor';
 import { DataService } from './@core/service/data.service';
+import { SelectService } from './@core/service/select.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -48,7 +49,8 @@ import { DataService } from './@core/service/data.service';
       useClass: TokenInterceptor,
       multi: true
     },
-    DataService
+    DataService,
+    SelectService
   ],
   bootstrap: [AppComponent],
 })
