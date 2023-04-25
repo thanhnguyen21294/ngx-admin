@@ -9,6 +9,7 @@ import { SYSTEM_CONSTANT } from '../../../@core/constants/system.constant';
 import { AuthService } from '../../../@core/service/auth.service';
 import { MenuService } from '../../../@core/service/menu.service';
 import { Auth, User } from '../../../@core/models/user';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'ngx-header',
@@ -50,7 +51,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private userService: UserData,
     private layoutService: LayoutService,
     private breakpointService: NbMediaBreakpointsService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -109,7 +111,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   profile() {
-    console.log("open profile");
+    this.router.navigateByUrl("/pages/profile")
   }
 
   logout() {

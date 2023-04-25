@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../@core/service/data.service';
 import { Products } from '../../@core/models/products';
 import { ToastrComponent } from '../modal-overlays/toastr/toastr.component';
+import { ProductApiService } from '../../@core/api/product-api.service';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'ngx-products',
@@ -12,14 +14,14 @@ import { ToastrComponent } from '../modal-overlays/toastr/toastr.component';
 export class ProductsComponent implements OnInit {
   public products: Products[];
 
-  constructor(private dataService: DataService, private toastr: ToastrComponent) { }
+  constructor(private productService: ProductApiService, private toastr: ToastrComponent) { }
 
   ngOnInit(): void {
     this.loadData();
   }
 
   loadData() {
-    this.dataService.get("/products").subscribe((res: Products[]) => {
+    this.productService.get().subscribe((res: Products[]) => {
       this.products = res;
     });
   }
@@ -83,7 +85,11 @@ export class ProductsComponent implements OnInit {
   onDeleteConfirm(event): void {
     const dataId = event.data.id;
     if (window.confirm('Are you sure you want to delete?')) {
-      this.dataService.deleteById(`/products`, dataId).subscribe(response => {
+      this.productService.deleteById(dataId).pipe(
+        catchError((err) => {
+          return throwError(err)
+        })
+      ).subscribe(response => {
         if (response) {
           this.toastr.makeToast('success', "Delete Product", "Delete success");
           event.confirm.resolve();
@@ -100,7 +106,11 @@ export class ProductsComponent implements OnInit {
   onCreateConfirm(event) {
     const data = event.newData;
     if (window.confirm('Are you sure you want to create?')) {
-      this.dataService.post(`/products`, data).subscribe(response => {
+      this.productService.post(data).pipe(
+        catchError((err) => {
+          return throwError(err)
+        })
+      ).subscribe(response => {
         if (response) {
           this.toastr.makeToast('success', "Create Product", "Create success");
           event.confirm.resolve();
@@ -117,7 +127,11 @@ export class ProductsComponent implements OnInit {
   onEditConfirm(event) {
     const data = event.newData;
     if (window.confirm('Are you sure you want to save?')) {
-      this.dataService.put(`/products/${event.newData.id}`, data).subscribe(response => {
+      this.productService.put(event.newData.id, data).pipe(
+        catchError((err) => {
+          return throwError(err)
+        })
+      ).subscribe(response => {
         if (response) {
           this.toastr.makeToast('success', "Edit Product", "Save success");
           event.confirm.resolve();

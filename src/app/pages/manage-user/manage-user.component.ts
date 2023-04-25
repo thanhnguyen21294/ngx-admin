@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { User } from '../../@core/models/user';
-import { DataService } from '../../@core/service/data.service';
 import { NbDialogService } from '@nebular/theme';
-import { AddOrEditModalComponent } from '../../shared/AddOrEditModal/AddOrEdit.component';
+import { AddOrEditModalComponent } from './AddOrEditUserModal/AddOrEdit.component';
 import { TYPE } from '../../@core/constants/type.constant';
 import { Subscription } from 'rxjs';
 import { SelectService } from '../../@core/service/select.service';
+import { UserApiService } from '../../@core/api/user-api.service';
 
 @Component({
   selector: 'ngx-manage-user',
@@ -17,7 +17,7 @@ export class ManageUserComponent implements OnInit, OnDestroy {
   names: string[] = [];
   subscription: Subscription;
 
-  constructor(private dataService: DataService, private dialogService: NbDialogService, private _selectService: SelectService) { }
+  constructor(private userService: UserApiService, private dialogService: NbDialogService, private _selectService: SelectService) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -29,7 +29,7 @@ export class ManageUserComponent implements OnInit, OnDestroy {
   }
 
   loadData() {
-    this.dataService.get("/users").subscribe((res: User[]) => {
+    this.userService.get().subscribe((res: User[]) => {
       this.users = res;
     });
   }

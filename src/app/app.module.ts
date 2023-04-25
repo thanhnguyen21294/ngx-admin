@@ -21,8 +21,8 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 import { TokenInterceptor } from './@core/interceptor/token.interceptor';
-import { DataService } from './@core/service/data.service';
 import { SelectService } from './@core/service/select.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,6 +31,8 @@ import { SelectService } from './@core/service/select.service';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),
@@ -49,7 +51,6 @@ import { SelectService } from './@core/service/select.service';
       useClass: TokenInterceptor,
       multi: true
     },
-    DataService,
     SelectService
   ],
   bootstrap: [AppComponent],

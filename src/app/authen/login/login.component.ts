@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       })
     ).subscribe(response => {
       this.authService.setUser(response);
-      this.router.navigate(['pages'])
+      setTimeout(() => this.router.navigate(['pages']), 500);
     })
   }
 

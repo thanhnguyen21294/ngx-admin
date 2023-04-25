@@ -1,0 +1,22 @@
+@import '../../../@theme/styles/themes.scss';
+
+@include nb-install-component() {
+  input {
+    width: 100%;
+  }
+
+  .cancel {
+    margin-right: 1rem;
+  }
+}
+
+#AddEditUser {
+  ::ng-deep nb-card-body:not(:first-child) {
+    max-height: 500px;
+    display: block;
+  }
+
+  ::ng-deep nb-card-footer {
+    text-align: right;
+  }
+}

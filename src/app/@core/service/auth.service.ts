@@ -17,9 +17,16 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient, private router: Router) {}
 
-  public setUser(authUser: Auth) {
-    localStorage.setItem(SYSTEM_CONSTANT.USER_CURRENT, JSON.stringify(authUser));
-    this.authSubject.next(authUser);
+  setUser(authUser: Auth) {
+    if(authUser) {
+      localStorage.setItem(SYSTEM_CONSTANT.USER_CURRENT, JSON.stringify(authUser));
+      this.authSubject.next(authUser);
+      console.log(this.authSubject)
+    }
+  }
+
+  getUser() {
+    return this.authSubject.asObservable();
   }
 
   public login(username: string, password: string): Observable<Auth> {
@@ -33,7 +40,7 @@ export class AuthService {
 
   public logout() {
     localStorage.removeItem(SYSTEM_CONSTANT.USER_CURRENT);
-    // this.authSubject.next(null);
+    this.authSubject.next(null);
     this.router.navigate(['/login']);
   }
 }

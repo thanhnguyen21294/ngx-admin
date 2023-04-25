@@ -4,7 +4,8 @@ import { ManageUserComponent } from "./manage-user.component";
 import { NbCardModule, NbTreeGridModule, NbIconModule, NbInputModule } from "@nebular/theme";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { ThemeModule } from "../../@theme/theme.module";
-import { AddOrEditModalModule } from "../../shared/AddOrEditModal/AddOrEdit.module";
+import { AddOrEditModalModule } from "./AddOrEditUserModal/AddOrEdit.module";
+import { FormsModule } from "@angular/forms";
 
 const route: Routes = [{
   path: '',
@@ -13,6 +14,7 @@ const route: Routes = [{
 
 @NgModule({
   imports: [
+    FormsModule,
     RouterModule.forChild(route),
     NbCardModule,
     NbTreeGridModule,

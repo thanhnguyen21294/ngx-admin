@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NbThemeService } from "@nebular/theme";
-import { Subscription } from "rxjs";
+import { Subscription, throwError } from "rxjs";
 import { Products } from "../../../@core/models/products";
-import { DataService } from "../../../@core/service/data.service";
 import { getRandomNumber } from "../../../@core/utils/utils.service";
+import { ProductApiService } from "../../../@core/api/product-api.service";
+import { catchError } from "rxjs/operators";
 
 @Component({
   selector: "ngx-product-detail",
@@ -33,7 +34,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   results = [];
   lineChartData: any[];
 
-  constructor(private dataService: DataService, private theme: NbThemeService) {
+  constructor(private productService: ProductApiService, private theme: NbThemeService) {
     this.themeSubscription = this.theme.getJsTheme().subscribe((config) => {
       const colors: any = config.variables;
       this.colorScheme = {
@@ -88,7 +89,11 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   }
 
   loadData() {
-    this.dataService.get("/products").subscribe((res: Products[]) => {
+    this.productService.get().pipe(
+      catchError(err => {
+        return throwError(err)
+      })
+    ).subscribe((res: Products[]) => {
       if (res) {
         this.products = res;
         this.results = [
