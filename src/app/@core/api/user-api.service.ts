@@ -1,9 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { HttpClient,HttpHeaders, HttpResponse } from '@angular/common/http';
 import { SYSTEM_CONSTANT } from "../constants/system.constant";
+import { ApiOptions } from "../models/api-option";
+import { environment } from "../../../environments/environment";
 const headers = new HttpHeaders({ "Content-Type": "application/json" });
 
+const USERS_API_ENDPOINT: string = environment.API_ENDPOINT + "/users";
 @Injectable({
   providedIn: 'root'
 })
@@ -15,26 +18,41 @@ export class UserApiService {
     private httpClient: HttpClient,
   ) {}
 
-  get(): Observable<any> {
-    return this.httpClient.get(this.baseUrl + "/users", {
-      headers: headers,
+  get(options: ApiOptions): Observable<HttpResponse<any>> {
+    let queryParams = [];
+    queryParams.push("_page=" + (options.currentPage || SYSTEM_CONSTANT.pageIndex));
+    queryParams.push("_sort=" + (options.column || "id"));
+    queryParams.push("_order=" + (options.direction || "desc"));
+    queryParams.push("_limit=" + (options.itemsPerPage || SYSTEM_CONSTANT.pageDisplay));
+    queryParams.push("q=" + (options.keyword || ""));
+    const queryParamsUrl = queryParams.join("&");
+
+    const api = USERS_API_ENDPOINT + `?${queryParamsUrl}`;
+    return this.httpClient.get(api , {
+      observe: "response"
     });
   }
 
   post(data : any): Observable<any> {
-    return this.httpClient.post(this.baseUrl + "/users", JSON.stringify(data), {
+    return this.httpClient.post(USERS_API_ENDPOINT , JSON.stringify(data), {
       headers: headers,
     });
   }
 
   put(dataId: string, data : any): Observable<any> {
-    return this.httpClient.put(this.baseUrl + `/users/${dataId}`, JSON.stringify(data), {
+    return this.httpClient.put(USERS_API_ENDPOINT + `/${dataId}`, JSON.stringify(data), {
+      headers: headers,
+    });
+  }
+
+  patch(dataId: string, data : any): Observable<any> {
+    return this.httpClient.patch(USERS_API_ENDPOINT + `/${dataId}`, JSON.stringify(data), {
       headers: headers,
     });
   }
 
   deleteById(id: string): Observable<any> {
-    return this.httpClient.delete(this.baseUrl + "/users" + `/${id}`, {
+    return this.httpClient.delete(USERS_API_ENDPOINT + `/${id}`, {
       headers: headers
     })
   }

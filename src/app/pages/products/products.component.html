@@ -7,5 +7,6 @@
     <ng2-smart-table [settings]="settings" [source]="products" (deleteConfirm)="onDeleteConfirm($event)"
       (createConfirm)="onCreateConfirm($event)" (editConfirm)="onEditConfirm($event)">
     </ng2-smart-table>
+    <ngx-pagination [totalRecords]="totalItem" [recordsPerPage]="pageSize" (pageChange)="changePage($event)"></ngx-pagination>
   </nb-card-body>
 </nb-card>

@@ -19,12 +19,8 @@ const route: Routes = [{
     NbInputModule,
     NbCardModule,
     NbButtonModule,
-    // NbActionsModule,
-    // NbUserModule,
     NbCheckboxModule,
-    // NbRadioModule,
     NbDatepickerModule,
-    // FormsRoutingModule,
     NbSelectModule,
     NbIconModule
   ],

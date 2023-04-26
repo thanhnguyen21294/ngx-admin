@@ -73,7 +73,7 @@ export class AddOrEditModalComponent implements OnInit {
     if (this.data) {
       let newData = this.data.data;
       if (this.title === TYPE.UPDATE) {
-        this.userService.put(newData.id, newData).pipe(
+        this.userService.patch(newData.id, newData).pipe(
           catchError(error => {
             return throwError(error)
           })

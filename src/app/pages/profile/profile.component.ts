@@ -1,10 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NotificationComponent } from '../../shared/notification/notification.component';
 import { UserApiService } from '../../@core/api/user-api.service';
 import { AuthService } from '../../@core/service/auth.service';
-import { Subscription, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { SYSTEM_CONSTANT } from '../../@core/constants/system.constant';
-import { Auth, User } from '../../@core/models/user';
+import { User } from '../../@core/models/user';
 import { catchError } from 'rxjs/operators';
 
 @Component({
@@ -13,26 +13,19 @@ import { catchError } from 'rxjs/operators';
   styleUrls: ['./profile.component.scss'],
   providers: [NotificationComponent]
 })
-export class ProfileComponent implements OnInit, OnDestroy {
+export class ProfileComponent implements OnInit {
   public user: User;
   authUser: any;
-  subscription: Subscription;
 
   constructor(private noti: NotificationComponent, private userService: UserApiService, private authService: AuthService) { }
 
 
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem(SYSTEM_CONSTANT.USER_CURRENT));
-    console.log(this.user)
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 
   submit() {
-    console.log(this.user)
-    this.userService.put(this.user.id.toString(), this.user).pipe(
+    this.userService.patch(this.user.id.toString(), this.user).pipe(
       catchError(error => {
         return throwError(error)
       })

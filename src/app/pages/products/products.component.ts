@@ -1,28 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { Products } from '../../@core/models/products';
-import { ToastrComponent } from '../modal-overlays/toastr/toastr.component';
 import { ProductApiService } from '../../@core/api/product-api.service';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { SYSTEM_CONSTANT } from '../../@core/constants/system.constant';
+import { HttpResponse, HttpStatusCode } from '@angular/common/http';
+import { NotificationComponent } from '../../shared/notification/notification.component';
 
 @Component({
   selector: 'ngx-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
-  providers: [ToastrComponent]
+  providers: [NotificationComponent]
 })
 export class ProductsComponent implements OnInit {
   public products: Products[];
+  totalItem: any
+  pageIndex = SYSTEM_CONSTANT.pageIndex
+  pageSize = SYSTEM_CONSTANT.pageDisplay
+  pageDisplay = SYSTEM_CONSTANT.pageDisplay
 
-  constructor(private productService: ProductApiService, private toastr: ToastrComponent) { }
+  constructor(private productService: ProductApiService, private noti: NotificationComponent) { }
 
   ngOnInit(): void {
     this.loadData();
   }
 
   loadData() {
-    this.productService.get().subscribe((res: Products[]) => {
-      this.products = res;
+    this.productService.get({ currentPage: this.pageIndex, itemsPerPage: this.pageSize }).subscribe((res: HttpResponse<Products[]>) => {
+      if (res.status == HttpStatusCode.Ok) {
+        this.products = res.body;
+        this.totalItem = res.headers.get('X-Total-Count');
+      }
     });
   }
 
@@ -53,7 +62,7 @@ export class ProductsComponent implements OnInit {
       cancelCreate: 'Create cancelled',
     },
     pager: {
-      display: true,
+      display: false,
       perPage: 10,
     },
     columns: {
@@ -91,14 +100,14 @@ export class ProductsComponent implements OnInit {
         })
       ).subscribe(response => {
         if (response) {
-          this.toastr.makeToast('success', "Delete Product", "Delete success");
+          this.noti.makeToast('success', "Delete Product", "Delete success");
           event.confirm.resolve();
         } else {
-          this.toastr.makeToast('danger', "Delete Product", "Delete failed")
+          this.noti.makeToast('danger', "Delete Product", "Delete failed")
         }
       });
     } else {
-      this.toastr.makeToast('warning', "Delete Product", "Delete canceled")
+      this.noti.makeToast('warning', "Delete Product", "Delete canceled")
       event.confirm.reject();
     }
   }
@@ -112,14 +121,14 @@ export class ProductsComponent implements OnInit {
         })
       ).subscribe(response => {
         if (response) {
-          this.toastr.makeToast('success', "Create Product", "Create success");
+          this.noti.makeToast('success', "Create Product", "Create success");
           event.confirm.resolve();
         } else {
-          this.toastr.makeToast('danger', "Create Product", "Create failed")
+          this.noti.makeToast('danger', "Create Product", "Create failed")
         }
       });
     } else {
-      this.toastr.makeToast('warning', "Create Product", "Create canceled")
+      this.noti.makeToast('warning', "Create Product", "Create canceled")
       event.confirm.reject();
     }
   }
@@ -127,21 +136,27 @@ export class ProductsComponent implements OnInit {
   onEditConfirm(event) {
     const data = event.newData;
     if (window.confirm('Are you sure you want to save?')) {
-      this.productService.put(event.newData.id, data).pipe(
+      this.productService.patch(event.newData.id, data).pipe(
         catchError((err) => {
           return throwError(err)
         })
       ).subscribe(response => {
         if (response) {
-          this.toastr.makeToast('success', "Edit Product", "Save success");
+          this.noti.makeToast('success', "Edit Product", "Save success");
           event.confirm.resolve();
         } else {
-          this.toastr.makeToast('danger', "Edit Product", "Save failed")
+          this.noti.makeToast('danger', "Edit Product", "Save failed")
         }
       });
     } else {
-      this.toastr.makeToast('warning', "Edit Product", "Save canceled")
+      this.noti.makeToast('warning', "Edit Product", "Save canceled")
       event.confirm.reject();
     }
+  }
+
+
+  changePage(event) {
+    this.pageIndex = event;
+    this.loadData();
   }
 }

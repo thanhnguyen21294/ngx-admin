@@ -6,6 +6,7 @@ import { Ng2SmartTableModule } from "ng2-smart-table";
 import { ThemeModule } from "../../@theme/theme.module";
 import { AddOrEditModalModule } from "./AddOrEditUserModal/AddOrEdit.module";
 import { FormsModule } from "@angular/forms";
+import { PaginationModule } from "../../shared/pagination/pagination.module";
 
 const route: Routes = [{
   path: '',
@@ -22,7 +23,9 @@ const route: Routes = [{
     NbInputModule,
     ThemeModule,
     Ng2SmartTableModule,
-    AddOrEditModalModule
+    AddOrEditModalModule,
+    PaginationModule
+
   ],
   exports: [
     RouterModule

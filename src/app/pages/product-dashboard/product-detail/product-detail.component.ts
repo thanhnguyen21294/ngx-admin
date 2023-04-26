@@ -5,6 +5,7 @@ import { Products } from "../../../@core/models/products";
 import { getRandomNumber } from "../../../@core/utils/utils.service";
 import { ProductApiService } from "../../../@core/api/product-api.service";
 import { catchError } from "rxjs/operators";
+import { HttpResponse, HttpStatusCode } from "@angular/common/http";
 
 @Component({
   selector: "ngx-product-detail",
@@ -89,13 +90,13 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   }
 
   loadData() {
-    this.productService.get().pipe(
+    this.productService.getDataForChart().pipe(
       catchError(err => {
         return throwError(err)
       })
-    ).subscribe((res: Products[]) => {
-      if (res) {
-        this.products = res;
+    ).subscribe((res: HttpResponse<Products[]>) => {
+      if (res.status == HttpStatusCode.Ok) {
+        this.products = res.body;
         this.results = [
           ...this.products.map((value) => {
             return {
@@ -104,7 +105,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
             };
           }),
         ];
-        this.lineChartData = this.mapDataForLineChart(res);
+        this.lineChartData = this.mapDataForLineChart(res.body);
       }
     });
   }

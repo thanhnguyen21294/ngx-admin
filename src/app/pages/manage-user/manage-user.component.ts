@@ -6,6 +6,8 @@ import { TYPE } from '../../@core/constants/type.constant';
 import { Subscription } from 'rxjs';
 import { SelectService } from '../../@core/service/select.service';
 import { UserApiService } from '../../@core/api/user-api.service';
+import { SYSTEM_CONSTANT } from '../../@core/constants/system.constant';
+import { HttpResponse, HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'ngx-manage-user',
@@ -13,6 +15,11 @@ import { UserApiService } from '../../@core/api/user-api.service';
   styleUrls: ['./manage-user.component.scss']
 })
 export class ManageUserComponent implements OnInit, OnDestroy {
+  totalItem: any
+  pageIndex = SYSTEM_CONSTANT.pageIndex
+  pageSize = SYSTEM_CONSTANT.pageDisplay
+  pageDisplay = SYSTEM_CONSTANT.pageDisplay
+
   users: User[];
   names: string[] = [];
   subscription: Subscription;
@@ -29,8 +36,11 @@ export class ManageUserComponent implements OnInit, OnDestroy {
   }
 
   loadData() {
-    this.userService.get().subscribe((res: User[]) => {
-      this.users = res;
+    this.userService.get({ currentPage: this.pageIndex, itemsPerPage: this.pageSize }).subscribe((res: HttpResponse<User[]>) => {
+      if(res.status == HttpStatusCode.Ok) {
+        this.users = res.body;
+        this.totalItem = res.headers.get('X-Total-Count');
+      }
     });
   }
 
@@ -62,7 +72,7 @@ export class ManageUserComponent implements OnInit, OnDestroy {
       cancelCreate: 'Create cancelled',
     },
     pager: {
-      display: true,
+      display: false,
       perPage: 10,
     },
     columns: {
@@ -132,5 +142,10 @@ export class ManageUserComponent implements OnInit, OnDestroy {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
     this.subscription.unsubscribe();
+  }
+
+  changePage(event) {
+    this.pageIndex = event;
+    this.loadData();
   }
 }
