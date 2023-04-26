@@ -63,7 +63,7 @@ export class ProductsComponent implements OnInit {
     },
     pager: {
       display: false,
-      perPage: 10,
+      perPage: 5,
     },
     columns: {
       id: {

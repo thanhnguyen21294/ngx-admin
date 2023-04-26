@@ -78,6 +78,7 @@ export class AddOrEditModalComponent implements OnInit {
             return throwError(error)
           })
         ).subscribe(response => {
+          console.log(response)
           if (response) {
             this.noti.makeToast('success', "Update User", "Save success");
             this._selectService.notifyModified(newData.id);

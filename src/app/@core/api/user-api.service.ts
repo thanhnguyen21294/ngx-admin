@@ -4,6 +4,7 @@ import { HttpClient,HttpHeaders, HttpResponse } from '@angular/common/http';
 import { SYSTEM_CONSTANT } from "../constants/system.constant";
 import { ApiOptions } from "../models/api-option";
 import { environment } from "../../../environments/environment";
+import { User } from "../models/user";
 const headers = new HttpHeaders({ "Content-Type": "application/json" });
 
 const USERS_API_ENDPOINT: string = environment.API_ENDPOINT + "/users";
@@ -33,19 +34,19 @@ export class UserApiService {
     });
   }
 
-  post(data : any): Observable<any> {
+  post(data : Partial<User>): Observable<any> {
     return this.httpClient.post(USERS_API_ENDPOINT , JSON.stringify(data), {
       headers: headers,
     });
   }
 
-  put(dataId: string, data : any): Observable<any> {
+  put(dataId: string, data : Partial<User>): Observable<any> {
     return this.httpClient.put(USERS_API_ENDPOINT + `/${dataId}`, JSON.stringify(data), {
       headers: headers,
     });
   }
 
-  patch(dataId: string, data : any): Observable<any> {
+  patch(dataId: string, data : Partial<User>): Observable<any> {
     return this.httpClient.patch(USERS_API_ENDPOINT + `/${dataId}`, JSON.stringify(data), {
       headers: headers,
     });
